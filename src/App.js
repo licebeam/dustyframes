@@ -33,9 +33,10 @@ function App() {
         className="header"
         title="Dusty Frames"
       />
+      <span>Youtube or Twitch video URL</span>
       <Input style={{width: 400, marginBottom: 20}} value={currenURL || ''} onChange={(e) => changeURL(e.target.value)}/>
       <div>
-        <div style={{height: 400}}>
+        <div style={{height: 380}}>
         {currenURL.length ? (
             <ReactPlayer
             controls
@@ -45,11 +46,15 @@ function App() {
           /> 
         ) : <Empty/>}
         </div>
-        <div>
-          <Button onClick={() => setStartFrame(Math.floor(currentPoS * 60))}>Set START Frame</Button>      
-          <span>{startFrame} = startFrame</span>
-          <Button onClick={() => setEndFrame(Math.floor(currentPoS * 60))}>Set END Frame</Button>
-          <span>{endFrame} = endFrame</span>
+        <div style={{display: 'flex', marginBottom: 30}}>
+          <div style={{display: 'flex', flexDirection: 'column', flex: 1, textAlign: 'center'}}>
+            <Button onClick={() => setStartFrame(Math.floor(currentPoS * 60))}>Set START Frame</Button>      
+            <span>Frame: {startFrame}</span>
+          </div>
+          <div style={{display: 'flex', flexDirection: 'column', flex: 1, textAlign: 'center'}}>
+            <Button onClick={() => setEndFrame(Math.floor(currentPoS * 60))}>Set END Frame</Button>
+            <span>Frame: {endFrame}</span>
+          </div>
         </div>
       </div>
       <span>TOTAL FRAMES = {(endFrame - startFrame)}</span>
@@ -59,6 +64,7 @@ function App() {
         <span> The code in this project is Open Source and free for anyone to use and contribute to.</span>
         <a href='https://github.com/licebeam/dustyframes/tree/master'> Github Repo</a>
       </div>
+      <span>Built using React, ant design and ReactPlayer</span>
     </div>
   );
 }
