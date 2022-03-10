@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import ReactPlayer from 'react-player'
 import moment from 'moment';
-import {PageHeader} from 'antd';
+import {PageHeader, Input, Button, Empty} from 'antd';
+import "antd/dist/antd.css";
 
 function App() {
   const [currenURL, setCurrentURL] = useState('https://www.youtube.com/watch?v=o1jO14fQBro');
@@ -27,28 +28,37 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="App" style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
       <PageHeader
-        className="site-page-header"
-        onBack={() => null}
-        title="Title"
-        subTitle="This is a subtitle"
+        className="header"
+        title="Dusty Frames"
       />
-      <input value={currenURL || ''} onChange={(e) => changeURL(e.target.value)}/>
-      <ReactPlayer
-        controls
-        url={currenURL} 
-        onDuration={(d) => setVideoLen(d)} 
-        onProgress={(p) => changeProgress(p)}
-      /> 
-      <button onClick={() => setStartFrame(Math.floor(currentPoS * 60))}>Set START Frame</button>
-      <button onClick={() => setEndFrame(Math.floor(currentPoS * 60))}>Set END Frame</button>
-      <span>{startFrame} = startFrame</span>/
-      <span>{endFrame} = endFrame</span>
-      <br></br>
+      <Input style={{width: 400, marginBottom: 20}} value={currenURL || ''} onChange={(e) => changeURL(e.target.value)}/>
+      <div>
+        <div style={{height: 400}}>
+        {currenURL.length ? (
+            <ReactPlayer
+            controls
+            url={currenURL} 
+            onDuration={(d) => setVideoLen(d)} 
+            onProgress={(p) => changeProgress(p)}
+          /> 
+        ) : <Empty/>}
+        </div>
+        <div>
+          <Button onClick={() => setStartFrame(Math.floor(currentPoS * 60))}>Set START Frame</Button>      
+          <span>{startFrame} = startFrame</span>
+          <Button onClick={() => setEndFrame(Math.floor(currentPoS * 60))}>Set END Frame</Button>
+          <span>{endFrame} = endFrame</span>
+        </div>
+      </div>
       <span>TOTAL FRAMES = {(endFrame - startFrame)}</span>
-      <br></br>
-      <span>FINAL TIME = {moment().startOf('day').seconds(((endFrame / 60) - (startFrame / 60))).format('HH:mm:ss')}.{getMs()}</span>
+      <span style={{fontSize: 20, fontWeight: 'bold'}}>FINAL TIME = {moment().startOf('day').seconds(((endFrame / 60) - (startFrame / 60))).format('HH:mm:ss')}.{getMs()}</span>
+      <span style={{fontSize: 12, color: 'red'}}> The frame count and time you may discover via Dusty Frames may not be 100% accurate to the millisecond</span>
+      <div style={{marginTop: 80}}>
+        <span> The code in this project is Open Source and free for anyone to use and contribute to.</span>
+        <a href='https://github.com/licebeam/dustyframes/tree/master'> Github Repo</a>
+      </div>
     </div>
   );
 }
