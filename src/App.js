@@ -16,6 +16,8 @@ function App() {
     setCurrentPos(0);
     setVideoLen(0);
     setCurrentURL(value);
+    setStartFrame(null);
+    setEndFrame(null);
   };
 
   const changeProgress = (p) => {
@@ -51,17 +53,15 @@ function App() {
             <Button onClick={() => setStartFrame(Math.floor(currentPoS * 60))}>Set START Frame</Button>      
             <span>Frame: {startFrame}</span>
           </div>
-          <Button onClick={() => setStartFrame(null)}>Clear Start</Button>
           <div style={{display: 'flex', flexDirection: 'column', flex: 1, textAlign: 'center'}}>
             <Button onClick={() => setEndFrame(Math.floor(currentPoS * 60))}>Set END Frame</Button>
             <span>Frame: {endFrame}</span>
           </div>
-          <Button onClick={() => setEndFrame(null)}>Clear End</Button>
         </div>
       </div>
       <span>TOTAL FRAMES COUNTED = {(endFrame - startFrame) > 0 ? (endFrame - startFrame) : 0}</span>
       <span style={{height: 10, fontSize: 10, color: 'brown'}}>{startFrame && endFrame ? (null) : 'Please set both start and end frames'}</span>
-      <span style={{fontSize: 30, fontWeight: 'bold', color: startFrame && endFrame ? 'green' : 'red', width: 400}}>FINAL TIME = {moment().startOf('day').seconds(((endFrame / 60) - (startFrame / 60))).format('HH:mm:ss')}.{getMs()}</span>
+      <div style={{textAlign: 'center', height: 80, fontSize: 30, fontWeight: 'bold', color: startFrame && endFrame ? 'green' : 'red', width: 400}}>{endFrame && startFrame > 0 ? (<span>FINAL TIME = {moment().startOf('day').seconds(((endFrame / 60) - (startFrame / 60))).format('HH:mm:ss')}.{getMs()}</span>) : 'Waiting'}</div>
       <span style={{fontSize: 12, color: 'red'}}> The frame count and time you may receive via Dusty Frames may not be 100% accurate to the millisecond</span>
       <span>If you are ever unsure, please use Avidemux for a more accurate frame timing</span>
       <a href="http://avidemux.sourceforge.net/">SourceForge Download</a>
