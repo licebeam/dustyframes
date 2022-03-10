@@ -1,7 +1,7 @@
-import './App.css';
 import React, {useState} from 'react';
 import ReactPlayer from 'react-player'
 import moment from 'moment';
+import {PageHeader} from 'antd';
 
 function App() {
   const [currenURL, setCurrentURL] = useState('https://www.youtube.com/watch?v=o1jO14fQBro');
@@ -28,6 +28,12 @@ function App() {
 
   return (
     <div className="App">
+      <PageHeader
+        className="site-page-header"
+        onBack={() => null}
+        title="Title"
+        subTitle="This is a subtitle"
+      />
       <input value={currenURL || ''} onChange={(e) => changeURL(e.target.value)}/>
       <ReactPlayer
         controls
